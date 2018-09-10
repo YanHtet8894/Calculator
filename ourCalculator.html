@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+     <head>
+
+     <title>Simple Calculator</title>
+
+     </head>
+
+<body> 
+<center>
+  <h2>Simple Calculator</h2>
+<table border="1" bgcolor="green">
+     <FORM name="calculator" action="">
+     <td colspan="4">
+      <input name="ReadOut" id="output" type="Text" size=24 value=" " readonly>
+
+<tr>
+  <td><input id="btn1" type="Button" value="  1  " onclick="NumPressed(1)"></td>
+  <td><input id="btn2" type="Button" value="  2  " onclick="NumPressed(2)"></td>        
+  <td><input id="btn3" type="Button" value="  3  " onclick="NumPressed(3)"></td>
+  <td><input id="btnplus" type="Button" value="  +  " onclick="Operation('+')"></td>
+</tr>
+
+<tr>
+  <td><input id="btn4" type="Button" value="  4  " onclick="NumPressed(4)"></td>
+  <td><input id="btn5" type="Button" value="  5  "onclick="NumPressed(5)"></td>        
+  <td><input id="btn6" type="Button" value="  6  " onclick="NumPressed(6)"></td>
+  <td><input id="btnminus" type="Button" value="  -   " onclick="Operation('-')"></td>
+</tr>
+
+<tr>
+  <td><input id="btn7" type="Button" value="  7  " onclick="NumPressed(7)"></td>
+  <td><input id="btn8" type="Button" value="  8  " onclick="NumPressed(8)"></td>        
+  <td><input id="btn9" type="Button" value="  9  " onclick="NumPressed(9)"></td>
+  <td><input id="btnmultiply" type="Button" value="   *  " onclick="Operation('*')"></td>
+</tr>
+
+<tr>
+  <td><input id="btnC" type="Button" value="  C " onclick="Clear()"></td> 
+  <td><input id="btn0" type="Button" value="  0  " onclick="NumPressed(0)"></td>
+  <td><input id="btnequals" type="Button" value="  =  " onclick="Operation('=')"></td>   
+  <td><input id="btndivide" type="Button" value="  /   " onclick="Operation('/')"></td>
+</tr>
+</FORM>
+</table>
+</center>
+<script>
+
+var FCalculator = document.calculator;
+var Accumulate = 0;
+var FlagNewNum = false;
+var PendingOp = "";
+
+function NumPressed (Num) {
+if (FlagNewNum) {
+FCalculator.ReadOut.value  = Num;
+FlagNewNum = false;
+   }
+else {
+if (FCalculator.ReadOut.value == "0")
+FCalculator.ReadOut.value = Num;
+else
+FCalculator.ReadOut.value += Num;
+   }
+}
+
+function Operation (Op) {
+var Readout = FCalculator.ReadOut.value;
+if (FlagNewNum && PendingOp != "=");
+else
+{
+FlagNewNum = true;
+if ( '+' == PendingOp )
+Accumulate += parseFloat(Readout);
+else if ( '-' == PendingOp )
+Accumulate -= parseFloat(Readout);
+else if ( '/' == PendingOp )
+Accumulate /= parseFloat(Readout);
+else if ( '*' == PendingOp )
+Accumulate *= parseFloat(Readout);
+else
+Accumulate = parseFloat(Readout);
+FCalculator.ReadOut.value = Accumulate;
+PendingOp = Op;
+   }
+}
+function Decimal () {
+var curReadOut = FCalculator.ReadOut.value;
+if (FlagNewNum) {
+curReadOut = "0.";
+FlagNewNum = false;
+   }
+else
+{
+if (curReadOut.indexOf(".") == -1)
+curReadOut += ".";
+   }
+FCalculator.ReadOut.value = curReadOut;
+}
+function ClearEntry () {
+FCalculator.ReadOut.value = "";
+FlagNewNum = true;
+}
+
+function Clear () {
+PendingOp = "";
+ClearEntry();
+}
+
+</script>
+
+</body>
+</html>
